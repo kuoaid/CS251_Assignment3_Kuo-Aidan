@@ -50,7 +50,7 @@
 ; If bst does not contain exactly three entries, for which the last two are lists, return #f.
 ;(You can use the predicate list? to check if something is a list.)
 
-
+;git
 ;PERFECTLY WORKING
 (define entry
   (lambda (bst)
