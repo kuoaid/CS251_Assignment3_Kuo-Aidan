@@ -1,3 +1,6 @@
+;TODO FIX FORMATTING!!!!!
+
+
 ;helper functions to extract elements of a LEGAL bst.
 (define extract-left
   (lambda (bst)
@@ -83,15 +86,88 @@
     )
   )
 )
-(make-bst 3 '() '())
-'(3 () ())
 
+;INORDER WORKING
+(define preorder
+  (lambda (bst)
+    (define left (extract-left bst))
+    (define right (extract-right bst))
+    (define root (list (extract-root bst)))
+    (append
+      root
+      (append
+        (if (not (is-empty-bst? left)) (preorder left) '())
+          (if (not (is-empty-bst? right)) (preorder right) '())))
+  )
+)
 
+(define postorder
+  (lambda (bst)
+    (define left (extract-left bst))
+    (define right (extract-right bst))
+    (define root (list (extract-root bst)))
+    (append
+      (append
+        (if (not (is-empty-bst? left)) (preorder left) '())
+          (if (not (is-empty-bst? right)) (preorder right) '())
+      )
+      root
+    )
+  )
+)
 
+(define inorder
+  (lambda (bst)
+    (define left (extract-left bst))
+    (define right (extract-right bst))
+    (define root (list (extract-root bst)))
+    (append
+      (append
+        (if (not (is-empty-bst? left)) (preorder left) '())
+          root
+      )
+      (if (not (is-empty-bst? right)) (preorder right) '())
+    )
+  )
+)
 
-; (make-bst 3 '(1 () (2 () ())) '(6 (4 () ()) (18 () ())))
-; '(
-; 3
-; (1 () (2 () ()))
-; (6 (4 () ()) (18 () ()))
+;this is robust, but... results are weirdly repeated.
+; (define preorder
+;   (lambda (bst)
+;     (define left (extract-left bst))
+;     (define right (extract-right bst))
+;     (define root (list (extract-root bst)))
+;     (define result (list root))
+;     (append result (append (if (not (is-empty-bst? left)) (preorder left)(if (not (is-empty-bst? right)) (preorder right) root)) (if (not (is-empty-bst? right)) (preorder right) root)))
+;   )
 ; )
+
+
+;so this passes 1 of 2 tests for PREORDER. This works, somewhat, but is definitely NOT robust.
+; (define preorder
+; (lambda (bst)
+;   (define result (list (extract-root bst)))
+;   (preorder-helper bst result)
+; )
+; )
+;
+; (define preorder-helper
+;   (lambda (bst soFar)
+;   (define left (extract-left bst))
+;   (define right (extract-right bst))
+;   (define root (list (extract-root bst)))
+;   (cond
+;     ((and (is-empty-bst? left) (is-empty-bst? right)) root)
+;     ((not (is-empty-bst? left)) (append soFar (append(preorder-helper left soFar) (if (not (is-empty-bst? right)) (preorder-helper right soFar)))))
+;     (else soFar)
+;   )
+;   ;if left is empty, return what you got so far.
+;   )
+; )
+;
+; '(1 2 3)
+; (preorder '(1 (2 () ()) (3 () ())))
+; ;
+; '(8 (4 () (6 () (7 () ()))) (28 (22 () (23 () ())) ()))
+; '(8 4 6 7 28 22 23)
+; (preorder '(8 (4 () (6 () (7 () ()))) (28 (22 () (23 () ())) ())))
