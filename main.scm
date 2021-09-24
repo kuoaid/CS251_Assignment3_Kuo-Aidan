@@ -67,7 +67,7 @@
   (if (is-populated-bst? bst) (extract-right bst) #f)))
 
 
-;QUESTION 2
+;QUESTION TWO. Working, but edge cases need DEBUG.
 ;This function returns a new tree whose root node is elt,
 ;whose left subtree is left-bst, and whose right subtree is right-bst.
 ;
@@ -87,7 +87,8 @@
   )
 )
 
-;INORDER WORKING
+
+;QUESTION THREE. Working, but edge cases need DEBUG.
 (define preorder
   (lambda (bst)
     (define left (extract-left bst))
@@ -131,6 +132,7 @@
   )
 )
 
+;bad codes written before.. may be useful.
 ;this is robust, but... results are weirdly repeated.
 ; (define preorder
 ;   (lambda (bst)
@@ -171,3 +173,23 @@
 ; '(8 (4 () (6 () (7 () ()))) (28 (22 () (23 () ())) ()))
 ; '(8 4 6 7 28 22 23)
 ; (preorder '(8 (4 () (6 () (7 () ()))) (28 (22 () (23 () ())) ())))
+
+;QUESTION 4, TODO figure out how to insert.
+; (define insert
+;   (lambda (v bst)
+;     (define left (extract-left bst))
+;     (define right (extract-right bst))
+;     (define root (list (extract-root bst)))
+;     (cond
+;     ((equal? root v) bst);exists, return bst.
+;
+;     ;this is really a big nested if.
+;     ;if smaller than v, you belong to the left of v. if left of v is occupied, keep going left to search; if left of v is not occupied, occupy.
+;     ((< root v)
+;       (if (is-empty-bst? left) (SET THIS LEFT ELEMENT TO V) (insert v left))
+;       ((> root v)
+;         (if (is-empty-bst? right) (SET THIS RIGHT ELEMENT TO V) (insert v right))
+;     ))
+;     )
+;   )
+; )
